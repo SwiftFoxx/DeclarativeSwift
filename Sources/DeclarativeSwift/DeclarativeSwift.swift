@@ -221,15 +221,233 @@ public extension UILabel {
 }
 
 public extension UITextView {
+  convenience init(frame: CGRect, delegate: UITextViewDelegate?) {
+    self.init(frame: frame)
+    self.delegate = delegate
+  }
   
+  @discardableResult
+  func setting(text t: String) -> UITextView {
+    text = t
+    return self
+  }
+  
+  @discardableResult
+  func setting(textColor tc: UIColor?) -> UITextView {
+    textColor = tc
+    return self
+  }
+  
+  @discardableResult
+  func setting(font f: UIFont?) -> UITextView {
+    font = f
+    return self
+  }
+  
+  @discardableResult
+  func setting(textAlignment alignment: NSTextAlignment) -> UITextView {
+    textAlignment = alignment
+    return self
+  }
+  
+  @discardableResult
+  func makingEditable(_ value: Bool) -> UITextView {
+    isEditable = value
+    return self
+  }
+  
+  @discardableResult
+  func setting(attributedText at: NSAttributedString) -> UITextView {
+    attributedText = at
+    return self
+  }
+  
+  @discardableResult
+  func adding(typingAttributes ta: [NSAttributedString.Key : Any]) -> UITextView {
+    typingAttributes = ta
+    return self
+  }
+  
+  @discardableResult
+  func scrollingRangeToVisible(range: NSRange) -> UITextView {
+    scrollRangeToVisible(range)
+    return self
+  }
+  
+  @discardableResult
+  func setInputView(_ view: UIView) -> UITextView {
+    inputView = view
+    return self
+  }
+  
+  @discardableResult
+  func setInputAccessoryView(_ view: UIView) -> UITextView {
+    inputAccessoryView = view
+    return self
+  }
+  
+  @discardableResult
+  func setTextScaling(_ value: Bool) -> UITextView {
+    usesStandardTextScaling = value
+    return self
+  }
 }
 
-public extension UITextView {
+public extension UITextField {
+  convenience init(frame: CGRect, delegate: UITextFieldDelegate?) {
+    self.init(frame: frame)
+    self.delegate = delegate
+  }
   
+  @discardableResult
+  func setting(text t: String?) -> UITextField {
+    text = t
+    return self
+  }
+  
+  @discardableResult
+  func setting(textColor tc: UIColor?) -> UITextField {
+    textColor = tc
+    return self
+  }
+  
+  @discardableResult
+  func setting(font f: UIFont?) -> UITextField {
+    font = f
+    return self
+  }
+  
+  @discardableResult
+  func setting(textAlignment alignment: NSTextAlignment) -> UITextField {
+    textAlignment = alignment
+    return self
+  }
+  
+  @discardableResult
+  func enabled(_ value: Bool) -> UITextField {
+    isEnabled = value
+    return self
+  }
+  
+  @discardableResult
+  func setting(attributedText at: NSAttributedString) -> UITextField {
+    attributedText = at
+    return self
+  }
+  
+  @discardableResult
+  func setting(borderStyle bs: UITextField.BorderStyle) -> UITextField {
+    borderStyle = bs
+    return self
+  }
+  
+  @discardableResult
+  func setting(defaultTextAttributes ta: [NSAttributedString.Key : Any]) -> UITextField {
+    defaultTextAttributes = ta
+    return self
+  }
+  
+  @discardableResult
+  func setting(placeholder pl: String?) -> UITextField {
+    placeholder = pl
+    return self
+  }
+  
+  @discardableResult
+  func setting(attributedPlaceholder ap: NSAttributedString) -> UITextField {
+    attributedPlaceholder = ap
+    return self
+  }
+  
+  @discardableResult
+  func setting(minimumFontSize min: CGFloat) -> UITextField {
+    minimumFontSize = min
+    return self
+  }
+  
+  @discardableResult
+  func adding(backgroundImage bg: UIImage?) -> UITextField {
+    background = bg
+    return self
+  }
+  
+  @discardableResult
+  func adding(disableBackgroundImage bg: UIImage?) -> UITextField {
+    disabledBackground = bg
+    return self
+  }
+  
+  @discardableResult
+  func adding(typingAttributes ta: [NSAttributedString.Key : Any]) -> UITextField {
+    typingAttributes = ta
+    return self
+  }
+  
+  @discardableResult
+  func setting(clearButtonMode mode: UITextField.ViewMode) -> UITextField {
+    clearButtonMode = mode
+    return self
+  }
+  
+  @discardableResult
+  func adding(leftView: UIView?, withViewMode mode: UITextField.ViewMode) -> UITextField {
+    self.leftView = leftView
+    leftViewMode = mode
+    return self
+  }
+  
+  @discardableResult
+  func adding(rightView: UIView?, withViewMode mode: UITextField.ViewMode) -> UITextField {
+    self.rightView = rightView
+    rightViewMode = mode
+    return self
+  }
 }
 
 public extension UIButton {
+  @discardableResult
+  func settng(title: String?, for state: UIControl.State) -> UIButton {
+    setTitle(title, for: state)
+    return self
+  }
   
+  @discardableResult
+  func settng(titleColor: UIColor?, for state: UIControl.State) -> UIButton {
+    setTitleColor(titleColor, for: state)
+    return self
+  }
+  
+  @discardableResult
+  func settng(titleShadowColor: UIColor?, for state: UIControl.State) -> UIButton {
+    setTitleShadowColor(titleShadowColor, for: state)
+    return self
+  }
+  
+  @discardableResult
+  func settng(image: UIImage?, for state: UIControl.State) -> UIButton {
+    setImage(image, for: state)
+    return self
+  }
+  
+  @discardableResult
+  func setting(backgroundImage image: UIImage?, for state: UIControl.State) -> UIButton {
+    setBackgroundImage(image, for: state)
+    return self
+  }
+  
+  @discardableResult
+  func setting(attributedTitle title: NSAttributedString?, for state: UIControl.State) -> UIButton {
+    setAttributedTitle(title, for: state)
+    return self
+  }
+  
+  @available(iOS 14.0, *)
+  @discardableResult
+  func menu(_ menu: UIMenu, showsMenuAsPrimaryAction isPrimary: Bool) -> UIButton {
+    self.menu = menu
+    showsMenuAsPrimaryAction = isPrimary
+    return self
+  }
 }
 
 public extension UIImageView {
