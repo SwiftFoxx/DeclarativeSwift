@@ -1,0 +1,5 @@
+name: DeclarativeSwift
+description: make coding easier and faster in Swift language.
+author: Koushik Mudi
+copyright: Koushik Mudi
+release-branch: master
