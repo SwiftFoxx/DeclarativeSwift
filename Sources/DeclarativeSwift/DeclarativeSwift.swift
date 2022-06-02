@@ -451,29 +451,16 @@ public extension UIButton {
 }
 
 public extension UIImageView {
-  
-}
-
-public extension UITableView {
-  
-}
-
-public extension UICollectionView {
-  
-}
-
-public extension UISwitch {
-  
-}
-
-public extension UIStepper {
-  
-}
-
-public extension UISlider {
-  
-}
-
-public extension UIProgressView {
-  
+  @discardableResult
+  func setting(image i: UIImage) -> UIImageView {
+    image = i
+    return self
+  }
+  @discardableResult
+  func settingAnimation(image i: [UIImage], duration d: TimeInterval, repeatCount rc: Int = 0) -> UIImageView {
+    animationImages = i
+    animationDuration = d
+    animationRepeatCount = rc
+    return self
+  }
 }
