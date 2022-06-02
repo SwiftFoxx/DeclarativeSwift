@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'DeclarativeSwift'
-  s.version          = '1.0.2'
+  s.version          = '1.0.5'
   s.summary          = 'Enhanced Swift experience by making the syntax as declarative as SwiftUI'
   s.homepage         = 'https://github.com/SwiftFoxx/DeclarativeSwift'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
