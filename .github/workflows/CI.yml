@@ -13,26 +13,12 @@ jobs:
     name: Darwin
     runs-on: macos-latest
     steps:
-    - name: Brew Upgrade
-      run: |
-        brew update-reset
-        brew bundle --no-upgrade
     - name: Xcode Build
       run: xcodebuild -scheme DeclarativeSwift -destination 'platform=iOS Simulator,OS=15,name=iPhone 11 Pro'
       env:
           SCHEME: DeclarativeSwift
           DESTINATION: platform=iOS Simulator,name=iPhone 13
-      
-  Swiftlint:
-    runs-on: macos-latest
-    name: SwiftLint
-    steps: 
-      - uses: actions/checkout@v1
-      - name: SwiftLint
-        run: |
-          brew update-reset
-          brew bundle --no-upgrade
-          swiftlint
+
   CocoaPods:
     name: CocoaPods
     runs-on: macos-latest
