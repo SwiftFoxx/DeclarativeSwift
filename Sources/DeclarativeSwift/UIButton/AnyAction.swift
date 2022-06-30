@@ -18,6 +18,7 @@
 
 import UIKit
 
+/// - Tag: anyAction
 public final class AnyAction {
     public let closure: () -> ()
     
