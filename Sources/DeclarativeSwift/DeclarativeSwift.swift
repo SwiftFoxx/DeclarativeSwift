@@ -188,56 +188,6 @@ public extension UIView {
   }
 }
 
-public extension UILabel {
-  @discardableResult
-  func settingText(_ value: String) -> UILabel {
-    text = value
-    return self
-  }
-  
-  @discardableResult
-  func settingText(color value: UIColor?) -> UILabel {
-    textColor = value
-    return self
-  }
-  
-  @discardableResult
-  func settingText(alignment value: NSTextAlignment) -> UILabel {
-    textAlignment = value
-    return self
-  }
-  
-  @discardableResult
-  func settingFont(_ value: UIFont) -> UILabel {
-    font = value
-    return self
-  }
-  
-  @discardableResult
-  func lineBreakMode(_ mode: NSLineBreakMode) -> UILabel {
-    lineBreakMode = mode
-    return self
-  }
-  
-  @discardableResult
-  func settingAttributed(text aT: NSAttributedString) -> UILabel {
-    attributedText = aT
-    return self
-  }
-  
-  @discardableResult
-  func enabled(_ value: Bool) -> UILabel {
-    isEnabled = value
-    return self
-  }
-  
-  @discardableResult
-  func numberOfLines(_ number: Int) -> UILabel {
-    numberOfLines = number
-    return self
-  }
-}
-
 public extension UITextView {
   convenience init(frame: CGRect, delegate: UITextViewDelegate?) {
     self.init(frame: frame)
