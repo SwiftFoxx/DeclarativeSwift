@@ -99,4 +99,41 @@ public extension UILabel {
         textColor = color(from: gradient)
         return self
     }
+    
+    @discardableResult
+    /// Add attribute to `UILabel`
+    /// - Parameters:
+    ///   - range: The range of the string to apply attributes
+    func attribute(textIn range: Range<String.Index>?, _ attributes: [NSAttributedString.Key : Any]) -> UILabel {
+        guard let range = range else {
+            NSLog("Could not get the text range")
+            return self
+        }
+        guard let text = text else {
+            NSLog("Could not get the text property")
+            return self
+        }
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttributes(attributes, range: NSRange(range, in: text))
+        attributedText = attributedString
+        return self
+    }
+    
+    @discardableResult
+    /// Add attribute to UILabel
+    /// - Parameters:
+    ///   - ranges: The ranges of the strings to apply attributes
+    func attribute(textIn ranges: Array<Range<String.Index>?>, _ attributes: [NSAttributedString.Key : Any]) -> UILabel {
+        guard let text = text else {
+            NSLog("Could not get the text property")
+            return self
+        }
+        let finalRanges = ranges.compactMap { $0 }
+        let attributedString = NSMutableAttributedString(string: text)
+        for range in finalRanges {
+            attributedString.addAttributes(attributes, range: NSRange(range, in: text))
+        }
+        attributedText = attributedString
+        return self
+    }
 }
