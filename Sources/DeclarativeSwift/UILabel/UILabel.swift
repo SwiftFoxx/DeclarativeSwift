@@ -20,48 +20,72 @@ import UIKit
 
 public extension UILabel {
     @discardableResult
+    /// Set the the text, substitute for `text = <String>`
+    /// - Parameter value: The `String` to be displayed
+    /// - Returns: The receiver of type `UILabel`
     func settingText(_ value: String) -> UILabel {
         text = value
         return self
     }
     
     @discardableResult
+    /// Set the text color, substitute for `textColor = <UIColor>`
+    /// - Parameter value: The color to apply to the text
+    /// - Returns: The receiver of type `UILabel`
     func settingText(color value: UIColor?) -> UILabel {
         textColor = value
         return self
     }
     
     @discardableResult
+    /// Set the alignment of the text, substitute for `textAlignment = <NSTextAlignment>`
+    /// - Parameter value: Value of type `NSTextAlignment` to apply to the `UILabel`
+    /// - Returns: The receiver of type `UILabel`
     func settingText(alignment value: NSTextAlignment) -> UILabel {
         textAlignment = value
         return self
     }
     
     @discardableResult
+    /// Set the font to the `UILabel`, substitute for `font = <UIFont>`
+    /// - Parameter value: Value of type `UIFont`
+    /// - Returns: The receiver of type `UILabel`
     func settingFont(_ value: UIFont) -> UILabel {
         font = value
         return self
     }
     
     @discardableResult
+    /// Apply the line break mode
+    /// - Parameter mode: Value of type `NSLineBreakMode`
+    /// - Returns: The receiver of type `UILabel`
     func lineBreakMode(_ mode: NSLineBreakMode) -> UILabel {
         lineBreakMode = mode
         return self
     }
     
     @discardableResult
+    /// Set attributed text to the `UILabel`
+    /// - Parameter aT: The attributed string of type `NSAttributedString`
+    /// - Returns: The receiver of type `UILabel`
     func settingAttributed(text aT: NSAttributedString) -> UILabel {
         attributedText = aT
         return self
     }
     
     @discardableResult
+    /// Set the enabled state
+    /// - Parameter value: Value of type `Bool`
+    /// - Returns: The receiver of type `UILabel`
     func enabled(_ value: Bool) -> UILabel {
         isEnabled = value
         return self
     }
     
     @discardableResult
+    /// Set the number of lines, substitute for `numberOfLines = <Int>`
+    /// - Parameter number: Value of type `Int`
+    /// - Returns: The receiver of type `UILabel`
     func numberOfLines(_ number: Int) -> UILabel {
         numberOfLines = number
         return self
