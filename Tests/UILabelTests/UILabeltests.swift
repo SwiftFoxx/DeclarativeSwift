@@ -4,6 +4,13 @@ import XCTest
 @testable import DeclarativeSwift
 
 final class UILabelTests: XCTestCase {
+    func testInitializer() throws {
+        let label = UILabel(text: "Here is some text", textStyle: .footnote)
+        XCTAssertNotNil(label.text)
+        XCTAssertEqual(label.text, "Here is some text")
+        XCTAssertEqual(label.font, UIFont.preferredFont(forTextStyle: .footnote))
+    }
+    
     func testAttributedString() throws {
         let label = UILabel()
         XCTAssertNil(label.text)

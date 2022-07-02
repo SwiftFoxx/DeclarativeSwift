@@ -2,6 +2,8 @@
 
 # DeclarativeSwift
 
+[![DeclarativeSwift](https://github.com/SwiftFoxx/DeclarativeSwift/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/SwiftFoxx/DeclarativeSwift/actions/workflows/CI.yml)
+
 ## Overview
 
 Enjoy writing Swift code by shortening the hassel to call the same property again and again.

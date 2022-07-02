@@ -19,11 +19,21 @@
 import UIKit
 
 public extension UILabel {
+    /// Initializes and returns a `UILabel` object with specified **text** and **textStyle**.
+    /// - Parameters:
+    ///   - text: The text to be displayed
+    ///   - style: Font style, one of `largeTitle`, `title`, `title2` etc. Default is `body`.
+    convenience init(text: String?, textStyle style: UIFont.TextStyle = .body) {
+        self.init()
+        settingText(text)
+        .settingFont(UIFont.preferredFont(forTextStyle: style))
+    }
+    
     @discardableResult
     /// Set the the text, substitute for `text = <String>`
     /// - Parameter value: The `String` to be displayed
     /// - Returns: The receiver of type `UILabel`
-    func settingText(_ value: String) -> UILabel {
+    func settingText(_ value: String?) -> UILabel {
         text = value
         return self
     }
