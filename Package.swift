@@ -24,7 +24,8 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "DeclarativeSwiftTests",
-            dependencies: ["DeclarativeSwift"]),
+            dependencies: ["DeclarativeSwift"],
+            path: "Tests")
     ],
     swiftLanguageVersions: [.v5]
 )
