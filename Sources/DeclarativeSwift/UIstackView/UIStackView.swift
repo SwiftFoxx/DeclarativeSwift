@@ -19,49 +19,47 @@
 import UIKit
 
 extension UIStackView {
-    /// Returns a new stack view object that manages the provided views.
+    /// Initializes and returns a new stack view object that manages the provided views.
     /// - Parameters:
     ///   - axis: The axis along which the arranged views are laid out.
     ///   - distribution: The distribution of the arranged views along the stack view’s axis.
     ///   - alignment: The alignment of the arranged subviews perpendicular to the stack view’s axis.
     ///   - content: The list of views arranged by the stack view.
-    convenience init(axis: NSLayoutConstraint.Axis, distribution: UIStackView.Distribution = .fill, alignment: UIStackView.Alignment = .center, @StackBuilder content: () -> [UIView]) {
+    convenience init(axis: NSLayoutConstraint.Axis, spacing: CGFloat = 0, distribution: UIStackView.Distribution = .fill, alignment: UIStackView.Alignment = .center, @StackBuilder content: () -> [UIView]) {
         self.init(arrangedSubviews: content())
         self.axis = axis
         self.distribution = distribution
         self.alignment = alignment
     }
     
-    /// <#Description#>
+    /// Initializes and returns a new stack view object that manages the provided views.
     /// - Parameters:
-    ///   - arrangedSubviews: <#arrangedSubviews description#>
-    ///   - axis: <#axis description#>
-    ///   - spacing: <#spacing description#>
-    ///   - alignment: <#alignment description#>
-    ///   - distribution: <#distribution description#>
-    convenience init( arrangedSubviews: [UIView], axis: NSLayoutConstraint.Axis, spacing: CGFloat = 0.0, alignment: UIStackView.Alignment = .fill, distribution: UIStackView.Distribution = .fill) {
+    ///   - arrangedSubviews: The list of views arranged by the stack view.
+    ///   - axis: The axis along which the arranged views are laid out.
+    ///   - spacing: The distance in points between the adjacent edges of the stack view’s arranged views.
+    ///   - alignment: The alignment of the arranged subviews perpendicular to the stack view’s axis.
+    ///   - distribution: The distribution of the arranged views along the stack view’s axis.
+    convenience init(arrangedSubviews: [UIView], axis: NSLayoutConstraint.Axis, spacing: CGFloat = 0, distribution: UIStackView.Distribution = .fill, alignment: UIStackView.Alignment = .center) {
             self.init(arrangedSubviews: arrangedSubviews)
             self.axis = axis
             self.spacing = spacing
-            self.alignment = alignment
             self.distribution = distribution
+            self.alignment = alignment
         }
     
     @discardableResult
-    /// <#Description#>
-    /// - Parameter views: <#views description#>
-    /// - Returns: <#description#>
+    /// Adds a view to the end of the arrangedSubviews array.
+    /// - Parameter views: The list of views to be added.
     func add(arrangedSubviews views: [UIView]) -> UIStackView {
         views.forEach { addArrangedSubview($0) }
         return self
     }
     
     @discardableResult
-    /// <#Description#>
+    /// Adds a view to the index of the specified arrangedSubview.
     /// - Parameters:
-    ///   - arrangedSubview: <#arrangedSubview description#>
-    ///   - newView: <#newView description#>
-    /// - Returns: <#description#>
+    ///   - arrangedSubview: The view to be replaced
+    ///   - newView: The view to be added.
     func replace(arrangedSubview: UIView, with newView: UIView) -> UIStackView {
         guard let viewIndex = arrangedSubviews.firstIndex(of: arrangedSubview) else {
             NSException(name: .undefinedKeyException, reason: "The query view was not found in arrangedSubviews").raise()
