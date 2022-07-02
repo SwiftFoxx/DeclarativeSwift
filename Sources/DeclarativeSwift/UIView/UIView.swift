@@ -301,6 +301,22 @@ public extension UIView {
         }
         return nil
     }
+}
+
+// MARK: - Animations
+public extension UIView {
+    @discardableResult
+    func adding(_ animation: Animation, for key: String?) -> UIView { /* String? -> AnimationKeyConvertible? */ return self }
     
+    @discardableResult
+    func startAnimation() -> UIView { return self }
     
+    @discardableResult
+    func pauseAnimation() -> UIView { return self }
+    
+    @discardableResult
+    func stopAnimation(withoutFinishing: Bool) -> UIView { return self }
+    
+    @discardableResult
+    func finishAnimation() -> UIView { return self }
 }

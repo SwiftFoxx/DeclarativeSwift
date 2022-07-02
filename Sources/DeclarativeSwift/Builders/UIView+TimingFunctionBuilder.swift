@@ -16,11 +16,34 @@
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import UIKit
+import Foundation
 
+@MainActor
 @resultBuilder
-public struct StackBuilder {
-    public static func buildBlock(_ components: UIView...) -> [UIView] {
-        components
+public struct TimingFunctionBuilder {
+    public static func buildBlock(_ component: TimingFunctionControlPoints) -> TimingFunctionControlPoints {
+        TimingFunctionControlPoints(
+            startX: component.startX,
+            startY: component.startY,
+            finishX: component.finishX,
+            finishY: component.finishY
+        )
     }
+    
+    public static func buildFinalResult(_ component: TimingFunctionControlPoints) -> TimingFunctionControlPoints {
+        TimingFunctionControlPoints(
+            startX: component.startX,
+            startY: component.startY,
+            finishX: component.finishX,
+            finishY: component.finishY
+        )
+    }
+}
+
+@MainActor
+public struct TimingFunctionControlPoints {
+    public let startX: Float
+    public let startY: Float
+    public let finishX: Float
+    public let finishY: Float
 }
