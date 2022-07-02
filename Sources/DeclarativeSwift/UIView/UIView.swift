@@ -82,6 +82,31 @@ public extension UIView {
     }
     
     @discardableResult
+    /// Clips the view to the rect as its bounds.
+    func clipped() -> UIView {
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.frame = bounds
+        if layer.cornerRadius == 0 {
+            shapeLayer.path = UIBezierPath(rect: bounds).cgPath
+        } else {
+            shapeLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: layer.cornerRadius).cgPath
+        }
+        layer.mask = shapeLayer
+        return self
+    }
+    
+    @discardableResult
+    /// Clips the view to the provided shape.
+    /// - Parameter shapeBlock: Creates the Shape AKA UIBezierPath
+    func clipShape(_ shapeBlock: () -> Shape) -> UIView {
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.frame = bounds
+        shapeLayer.path = shapeBlock().cgPath
+        layer.mask = shapeLayer
+        return self
+    }
+    
+    @discardableResult
     /// Sets a mask whose alpha channel is used for visibility of the receiver.
     /// - Parameter aView: A view to set as the mask.
     func masking(with aView: UIView?) -> UIView {
@@ -220,6 +245,63 @@ public extension UIView {
     /// - Parameter newColor: Value of type `UIColor`
     func changingBackgroundColor(to newColor: UIColor?) -> UIView {
         backgroundColor = newColor
+        return self
+    }
+    
+    /// Creates and returns a circular `Shape` AKA `UIBezierPath`
+    /// - Parameter radius: The radius of the circle
+    /// - Returns: A circular `Shape` AKA `UIBezierPath`
+    func circle(_ radius: CGFloat = 0) -> Shape {
+        UIBezierPath(
+            arcCenter: CGPoint(x: bounds.width / 2, y: bounds.height / 2),
+            radius: radius == 0 ? (min(bounds.width, bounds.height) / 2) : radius,
+            startAngle: 0,
+            endAngle: CGFloat(360).radians(),
+            clockwise: true
+        )
+    }
+    
+    /// Creates and returns an oval `Shape` AKA `UIBezierPath`
+    /// - Parameter rect: The frame of the oval
+    /// - Returns: An oval `Shape` AKA `UIBezierPath`
+    func oval(in rect: CGRect = .zero) -> Shape {
+        UIBezierPath(ovalIn: rect == .zero ? bounds : rect)
+    }
+    
+    /// Creates and returns a rectangular `Shape` AKA `UIBezierPath` with round corners
+    /// - Parameters:
+    ///   - radius: The corner radius of the rectangle
+    ///   - corners: Corners to be rounded
+    /// - Returns: A rectangular `Shape` AKA `UIBezierPath` with round corners
+    func roundedRect(radius: CGFloat, byRounding corners: UIRectCorner = .allCorners) -> Shape {
+        UIBezierPath(
+            roundedRect: bounds,
+            byRoundingCorners: corners,
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
+    }
+    
+    @discardableResult
+    /// Adds objects of type `ViewBackgroundConvertible` to the background of the view.
+    func background(_ block: (UIView) -> ViewBackgroundConvertible) -> UIView {
+        let element = block(self)
+        if element is Color {
+            backgroundColor = element as? UIColor
+        } else if element is Gradient {
+            let gradientColor = color(from: element as! Gradient)
+            backgroundColor = gradientColor
+        } else if element is Path || element is Shape {
+            guard let path = element as? Path ?? element as? Shape else {
+                NSLog("Invalid \(element.`class`)" + "\n" + #function)
+                return self
+            }
+            let shapeLayer = CAShapeLayer()
+            shapeLayer.frame = path.bounds
+            shapeLayer.path = path.cgPath
+            layer.insertSublayer(shapeLayer, at: 0)
+            let maskLayer = shapeLayer.copy() as! CAShapeLayer
+            layer.mask = maskLayer
+        }
         return self
     }
     

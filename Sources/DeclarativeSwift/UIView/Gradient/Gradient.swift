@@ -18,7 +18,8 @@
 
 import UIKit
 
-public struct Gradient {
+@MainActor
+public class Gradient: NSObject, ViewBackgroundConvertible {
     var colors: [UIColor]
     var gradientType: CAGradientLayerType = .axial
     var direction: GradientDirection = .minXmaxX
@@ -68,8 +69,18 @@ public struct Gradient {
             }
         }
     }
+    
+    public var needsEmbedding: Bool {
+        true
+    }
+    
+    public var `class`: String {
+        "Gradient"
+    }
 }
 
+// TODO: -
+// Put in appropriate files
 extension UIView {
     func color(from gradient: Gradient) -> UIColor? {
         let gradientLayer = CAGradientLayer()
