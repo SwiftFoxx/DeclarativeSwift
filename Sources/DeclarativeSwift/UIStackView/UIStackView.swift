@@ -25,7 +25,7 @@ extension UIStackView {
     ///   - distribution: The distribution of the arranged views along the stack view’s axis.
     ///   - alignment: The alignment of the arranged subviews perpendicular to the stack view’s axis.
     ///   - content: The list of views arranged by the stack view.
-    convenience init(axis: NSLayoutConstraint.Axis, spacing: CGFloat = 0, distribution: UIStackView.Distribution = .fill, alignment: UIStackView.Alignment = .center, @StackBuilder content: () -> [UIView]) {
+    convenience init(axis: NSLayoutConstraint.Axis, spacing: CGFloat = 0, distribution: UIStackView.Distribution = .fill, alignment: UIStackView.Alignment = .center, @StackViewBuilder content: () -> [UIView]) {
         self.init(arrangedSubviews: content())
         self.axis = axis
         self.distribution = distribution
