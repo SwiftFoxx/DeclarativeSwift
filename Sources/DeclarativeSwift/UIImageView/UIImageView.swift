@@ -21,14 +21,64 @@ import UIKit
 public extension UIImageView {
     @discardableResult
     func setting(image i: UIImage) -> UIImageView {
+        viewWithTag(10105)?.removeFromSuperview()
         image = i
         return self
     }
+    
     @discardableResult
     func settingAnimation(image i: [UIImage], duration d: TimeInterval, repeatCount rc: Int = 0) -> UIImageView {
+        viewWithTag(10105)?.removeFromSuperview()
         animationImages = i
         animationDuration = d
         animationRepeatCount = rc
+        return self
+    }
+    
+    @discardableResult
+    func setting(imageFrom url: URL?,
+                 allowingCellular cellular: Bool = false,
+                 ignoresLowDataMode constrained: Bool = false,
+                 ignoresExpensive isExpensive: Bool = false) async -> UIImageView {
+        guard let url = url else { return self }
+        let sessionConfiguration = URLSessionConfiguration.ephemeral
+        sessionConfiguration.allowsCellularAccess = cellular
+        sessionConfiguration.allowsConstrainedNetworkAccess = constrained
+        sessionConfiguration.allowsExpensiveNetworkAccess = isExpensive
+        sessionConfiguration.httpAdditionalHeaders = ["request-client" : "DeclarativeSwift"]
+        sessionConfiguration.httpCookieStorage = .shared
+        sessionConfiguration.networkServiceType = .background
+        do {
+            let (data, response) = try await URLSession(configuration: sessionConfiguration).data(from: url)
+            guard let mimeType = response.mimeType, mimeType.hasPrefix("image") else {
+                NSLog("The mimeType in the response does not indicate the existence of image.")
+                return self
+            }
+            let downloadedImage = UIImage(data: data)
+            DispatchQueue.main.async { [self] in
+                viewWithTag(10105)?.removeFromSuperview()
+                image = downloadedImage
+            }
+        } catch {
+            NSLog("Image download encountered error: \(error)")
+        }
+        return self
+    }
+    
+    @discardableResult
+    func placeholder(forced: Bool = false, @PlaceholderBuilder _ content: () -> UIView) -> UIImageView {
+        if forced || image == nil {
+            let placeholderView = content().changing(frame: bounds).tagging(10105)
+            addSubview(placeholderView)
+        }
+        return self
+    }
+    
+    @discardableResult
+    func placeholder(forced: Bool = false, @PlaceholderBuilder _ content: () -> UIImage) -> UIImageView {
+        if forced || image == nil {
+            image = content()
+        }
         return self
     }
 }
