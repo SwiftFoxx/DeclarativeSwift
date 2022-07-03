@@ -18,7 +18,6 @@
 
 import UIKit
 
-@MainActor
 public protocol ViewBackgroundConvertible {
     var needsEmbedding: Bool { get }
     

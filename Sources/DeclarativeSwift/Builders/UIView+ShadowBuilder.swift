@@ -33,11 +33,11 @@ public struct ShadowBuilder {
 
 /// - Tag: Shadow
 public struct Shadow {
-    var shadowPath: UIBezierPath?
-    var shadowColor: UIColor?
-    var shadowOffset: CGSize = .zero
-    var shadowRadius: CGFloat
-    var opacity: Float
+    public var shadowPath: UIBezierPath?
+    public var shadowColor: UIColor?
+    public var shadowOffset: CGSize = .zero
+    public var shadowRadius: CGFloat
+    public var opacity: Float
     
     public enum ShadowProperties {
         case shadowPath

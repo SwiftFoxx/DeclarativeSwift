@@ -169,6 +169,13 @@ public extension UIView {
     }
     
     @discardableResult
+    /// Adds this view to the end of the provided view's list of subviews.
+    func embedding(in aSuperView: UIView) -> UIView {
+        aSuperView.addSubview(self)
+        return self
+    }
+    
+    @discardableResult
     /// Moves the specified subview so that it appears on top of its siblings.
     /// - Parameter aSubView: The subview to move to the front.
     func bringingSubview(toFront aSubView: UIView) -> UIView {
@@ -281,11 +288,11 @@ public extension UIView {
         )
     }
     
-    @discardableResult
+    @inlinable @discardableResult
     /// Adds objects of type `ViewBackgroundConvertible` to the background of the view.
     func background(_ block: (UIView) -> ViewBackgroundConvertible) -> UIView {
         let element = block(self)
-        if element is Color {
+        if element is UIColor {
             backgroundColor = element as? UIColor
         } else if element is Gradient {
             let gradientColor = color(from: element as! Gradient)
@@ -310,7 +317,7 @@ public extension UIView {
     /// - Parameters:
     ///   - value: The radius to use when drawing rounded corners for the layer’s background.
     ///   - smooths: Value of type `Bool`. When YES, the corner curves are smoother.
-    func roundingCorners(by value: CGFloat, smoothingCurves smooths: Bool) -> UIView {
+    func roundingCorners(by value: CGFloat, smoothingCurves smooths: Bool = true) -> UIView {
         layer.cornerRadius = value
         if smooths {
             if #available(iOSApplicationExtension 13.0, *) {
@@ -349,7 +356,7 @@ public extension UIView {
         return self
     }
     
-    @discardableResult
+    @inlinable @discardableResult
     /// Adds shadow to the view's layer
     /// - Parameter shadow: A closure type that takes the properties of (x-source-tag://Shadow)[Shadow]
     func addingShadow(@ShadowBuilder _ shadow: () -> Shadow) -> UIView {
@@ -383,22 +390,4 @@ public extension UIView {
         }
         return nil
     }
-}
-
-// MARK: - Animations
-public extension UIView {
-    @discardableResult
-    func adding(_ animation: Animation, for key: String?) -> UIView { /* String? -> AnimationKeyConvertible? */ return self }
-    
-    @discardableResult
-    func startAnimation() -> UIView { return self }
-    
-    @discardableResult
-    func pauseAnimation() -> UIView { return self }
-    
-    @discardableResult
-    func stopAnimation(withoutFinishing: Bool) -> UIView { return self }
-    
-    @discardableResult
-    func finishAnimation() -> UIView { return self }
 }

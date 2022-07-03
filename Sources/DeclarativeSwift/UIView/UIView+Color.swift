@@ -18,7 +18,6 @@
 
 import UIKit
 
-@MainActor
 public class Color: NSObject, ViewBackgroundConvertible {
     
     public static var black = UIColor.black
@@ -87,4 +86,16 @@ public class Color: NSObject, ViewBackgroundConvertible {
     public var `class`: String {
         "Color"
     }
+}
+
+extension UIColor: ViewBackgroundConvertible {
+    public var needsEmbedding: Bool {
+        false
+    }
+    
+    public var `class`: String {
+        "UIColor"
+    }
+    
+    
 }

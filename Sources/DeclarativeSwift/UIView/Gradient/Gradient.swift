@@ -18,7 +18,6 @@
 
 import UIKit
 
-@MainActor
 public class Gradient: NSObject, ViewBackgroundConvertible {
     var colors: [UIColor]
     var gradientType: CAGradientLayerType = .axial
@@ -79,9 +78,8 @@ public class Gradient: NSObject, ViewBackgroundConvertible {
     }
 }
 
-// TODO: -
-// Put in appropriate files
 extension UIView {
+    @usableFromInline
     func color(from gradient: Gradient) -> UIColor? {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = bounds
