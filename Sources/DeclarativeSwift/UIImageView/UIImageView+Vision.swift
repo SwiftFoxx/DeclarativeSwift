@@ -28,13 +28,12 @@ public extension UIImageView {
     /// The mask has the foreground/subject in white and the background in black.
     /// Access `resultHandler` to get the mask image and use as required.
     /// - Parameter resultHandler: Closure type of `(Result<UIImage, Error>) -> Void`
-    @discardableResult
-    func extractingSubject(_ resultHandler: (Result<UIImage, Error>) -> Void) -> UIImageView {
+    func extractSubject(_ resultHandler: (Result<UIImage, Error>) -> Void) {
         guard let image = self.image,
               let convertedCGImage = image.cgImage else {
             NSLog("Could not get \'CGImage\' from the source image")
             NSLog(#function)
-            return self
+            return
         }
         let request = VNGeneratePersonSegmentationRequest()
         request.revision = VNGeneratePersonSegmentationRequestRevision1
@@ -52,7 +51,7 @@ public extension UIImageView {
         guard let mask = request.results?.first else {
             let error = NSError(domain: "declarativeswift.error", code: NSCoderValueNotFoundError)
             resultHandler(.failure(error))
-            return self
+            return
         }
         
         let maskBuffer = mask.pixelBuffer
@@ -71,11 +70,10 @@ public extension UIImageView {
         ) else {
             let error = NSError(domain: "declarativeswift.error", code: NSCoderValueNotFoundError)
             resultHandler(.failure(error))
-            return self
+            return
         }
         
         let resultUIImage = UIImage(cgImage: resultCGImage, scale: image.scale, orientation: image.imageOrientation)
         resultHandler(.success(resultUIImage))
-        return self
     }
 }

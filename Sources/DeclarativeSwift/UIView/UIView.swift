@@ -323,7 +323,7 @@ public extension UIView {
         return self
     }
     
-    @discardableResult
+    @discardableResult @objc
     /// Draws rounded corner for the layer's background.
     /// - Parameters:
     ///   - value: The radius to use when drawing rounded corners for the layer’s background.
@@ -379,7 +379,7 @@ public extension UIView {
         return self
     }
     
-    @discardableResult
+    @discardableResult @objc
     /// Draws border on the view's layer with specified color and width.
     /// - Parameters:
     ///   - color: The border color.
