@@ -18,15 +18,33 @@
 
 import UIKit
 
-/// - Tag: anyAction
-public final class AnyAction {
-    public let closure: () -> Void
-    
-     public init (_ closure: @escaping () -> Void) {
-        self.closure = closure
+@resultBuilder
+public struct PlaceholderBuilder {
+    public static func buildBlock(_ component: UIView) -> UIView {
+        component
     }
     
-    @objc public func invoke () {
-        closure()
+    public static func buildBlock(_ component: UIImage) -> UIImage {
+        component
+    }
+    
+    public static func buildOptional(_ component: UIView?) -> UIView {
+        component ?? UIView().changingBackgroundColor(to: .systemGray)
+    }
+    
+    public static func buildOptional(_ component: UIImage?) -> UIImage {
+        component ?? UIImage(systemName: "photo") ?? UIImage()
+    }
+    
+    public static func buildLimitedAvailability(_ component: UIImage) -> UIImage {
+        component
+    }
+    
+    public static func buildFinalResult(_ component: UIView) -> UIView {
+        component
+    }
+    
+    public static func buildFinalResult(_ component: UIImage) -> UIImage {
+        component
     }
 }

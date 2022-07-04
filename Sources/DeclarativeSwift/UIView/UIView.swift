@@ -241,6 +241,17 @@ public extension UIView {
     }
     
     @discardableResult
+    /// Removes specified subviews.
+    /// - Parameter views: The sub views to be removed.
+    func removing(subViews views: [UIView]) -> UIView {
+        for view in views {
+            guard subviews.contains(view) else { return self }
+            view.removeFromSuperview()
+        }
+        return self
+    }
+    
+    @discardableResult
     /// Removes all of the sub views that this view has.
     func removingAllSubViews() -> UIView {
         subviews.forEach { $0.removeFromSuperview() }
@@ -312,7 +323,7 @@ public extension UIView {
         return self
     }
     
-    @discardableResult
+    @discardableResult @objc
     /// Draws rounded corner for the layer's background.
     /// - Parameters:
     ///   - value: The radius to use when drawing rounded corners for the layer’s background.
@@ -368,7 +379,7 @@ public extension UIView {
         return self
     }
     
-    @discardableResult
+    @discardableResult @objc
     /// Draws border on the view's layer with specified color and width.
     /// - Parameters:
     ///   - color: The border color.
@@ -377,6 +388,45 @@ public extension UIView {
         layer.borderColor = color.cgColor
         layer.borderWidth = width
         return self
+    }
+    
+    @discardableResult
+    /// Adds a blur effect at the end of the subViews covering other sub views beneath.
+    /// - Parameter style: The style of the blur. Default is `UIBlurEffect.Style.systemThinMaterial`
+    func blurringContent(to style: UIBlurEffect.Style = .systemThinMaterial) -> UIView {
+        let effect = UIBlurEffect(style: style)
+        let visualEffectView = UIVisualEffectView(effect: effect)
+        visualEffectView.frame = bounds
+        addSubview(visualEffectView)
+        return self
+    }
+    
+    @discardableResult
+    /// Removes the blue effect.
+    func removingBlur() -> UIView {
+        let visualEffectView = subviews.first as? UIVisualEffectView
+        visualEffectView?.removeFromSuperview()
+        return self
+    }
+    
+    @discardableResult
+    /// Adds views over the subviews containing sensitive information.
+    /// - Parameter color: The color that the reduction view uses. default is `UIColor.systemGray`
+    func redacted(with color: UIColor = .systemGray) -> UIView {
+        subviews.forEach { sv in
+            let reductionView = UIView(frame: sv.frame).tagging(5000)
+            reductionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            reductionView.backgroundColor = color
+            addSubview(reductionView)
+        }
+        return self
+    }
+    
+    @discardableResult
+    /// Removes the reduction views and exposes the origin subviews.
+    func released() -> UIView {
+        let reductionViews = subviews.filter { $0.tag == 5000 }
+        return removing(subViews: reductionViews)
     }
     
     /// The view controller that has the view embedded.
