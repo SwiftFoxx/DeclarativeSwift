@@ -106,7 +106,7 @@ public extension UILabel {
     /// - Parameter gradient: `Gradient` properties
     /// - Returns: The receiver of type `UILabel`
     func applying(_ gradient: Gradient) -> UILabel {
-        textColor = color(from: gradient)
+        textColor = Gradient.color(from: gradient, frame: bounds)
         return self
     }
     

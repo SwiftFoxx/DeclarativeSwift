@@ -73,6 +73,24 @@ public extension UITextView {
     }
     
     @discardableResult
+    func scrollToTop() -> UITextView {
+        let length = (text as NSString).length
+        guard length > 0 else { return self }
+        let range = NSRange(location: 0, length: length - 1)
+        scrollRangeToVisible(range)
+        return self
+    }
+    
+    @discardableResult
+    func scrollToBottom() -> UITextView {
+        let length = (text as NSString).length
+        guard length > 0 else { return self }
+        let range = NSRange(location: length - 1, length: 1)
+        scrollRangeToVisible(range)
+        return self
+    }
+    
+    @discardableResult
     func setInputView(_ view: UIView) -> UITextView {
         inputView = view
         return self
@@ -87,6 +105,17 @@ public extension UITextView {
     @discardableResult
     func setTextScaling(_ value: Bool) -> UITextView {
         usesStandardTextScaling = value
+        return self
+    }
+    
+    @discardableResult
+    func wrap() -> UITextView {
+        contentInset = .zero
+        contentOffset = .zero
+        textContainerInset = .zero
+        textContainer.lineFragmentPadding = 0
+        scrollIndicatorInsets = .zero
+        sizeToFit()
         return self
     }
 }

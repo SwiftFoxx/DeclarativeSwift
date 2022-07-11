@@ -306,7 +306,7 @@ public extension UIView {
         if element is UIColor {
             backgroundColor = element as? UIColor
         } else if element is Gradient {
-            let gradientColor = color(from: element as! Gradient)
+            let gradientColor = Gradient.color(from: element as! Gradient, frame: bounds)
             backgroundColor = gradientColor
         } else if element is Path || element is Shape {
             guard let path = element as? Path ?? element as? Shape else {

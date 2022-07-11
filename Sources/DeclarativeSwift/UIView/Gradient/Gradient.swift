@@ -24,7 +24,7 @@ public class Gradient: NSObject, ViewBackgroundConvertible {
     var direction: GradientDirection = .minXmaxX
     var locations: [NSNumber]? = nil
     
-    public init(colors: UIColor..., gradientType: CAGradientLayerType, gradientDirection: GradientDirection = .minXmaxX, locations: [NSNumber]? = nil) {
+    public init(colors: UIColor..., gradientType: CAGradientLayerType = .axial, gradientDirection: GradientDirection = .minXmaxX, locations: [NSNumber]? = nil) {
         self.colors = colors
         self.gradientType = gradientType
         self.direction = gradientDirection
@@ -76,19 +76,17 @@ public class Gradient: NSObject, ViewBackgroundConvertible {
     public var `class`: String {
         "Gradient"
     }
-}
-
-extension UIView {
+    
     @usableFromInline
-    func color(from gradient: Gradient) -> UIColor? {
+    static func color(from gradient: Gradient, frame: CGRect) -> UIColor? {
         let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = bounds
+        gradientLayer.frame = frame
         gradientLayer.colors = gradient.colors.map { $0.cgColor }
         gradientLayer.startPoint = gradient.direction.startPoint
         gradientLayer.endPoint = gradient.direction.endPoint
         gradientLayer.type = gradient.gradientType
         gradientLayer.locations = gradient.locations
-        UIGraphicsBeginImageContext(bounds.size)
+        UIGraphicsBeginImageContext(frame.size)
         guard let context = UIGraphicsGetCurrentContext() else { return nil }
         gradientLayer.render(in: context)
         guard let gradientImage = UIGraphicsGetImageFromCurrentImageContext() else { return nil }

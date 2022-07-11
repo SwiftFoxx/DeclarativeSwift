@@ -127,4 +127,26 @@ public extension UITextField {
         rightViewMode = mode
         return self
     }
+    
+    @discardableResult
+    func setToolbar(_ toolbarWithItems: UIToolbar) -> UITextField {
+        inputAccessoryView = toolbarWithItems
+        return self
+    }
+    
+    @discardableResult
+    func setToolbar(
+        with items: [UIBarButtonItem],
+        toolbarSize: CGSize = CGSize(
+            width: UIScreen.main.bounds.width,
+            height: 45
+        )
+    ) -> (UIToolbar, UITextField) {
+        let toolbar = UIToolbar(frame: CGRect(origin: .zero, size: toolbarSize))
+        toolbar.setItems(items, animated: true)
+        inputAccessoryView = toolbar
+        return (toolbar, self)
+    }
+    
+    
 }
