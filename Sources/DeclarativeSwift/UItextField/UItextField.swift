@@ -134,19 +134,20 @@ public extension UITextField {
         return self
     }
     
+    @inlinable
     @discardableResult
     func setToolbar(
         with items: [UIBarButtonItem],
         toolbarSize: CGSize = CGSize(
             width: UIScreen.main.bounds.width,
             height: 45
-        )
-    ) -> (UIToolbar, UITextField) {
+        ),
+        toolbarCompletion: @escaping @Sendable (UIToolbar) -> Void
+    ) -> UITextField {
         let toolbar = UIToolbar(frame: CGRect(origin: .zero, size: toolbarSize))
         toolbar.setItems(items, animated: true)
         inputAccessoryView = toolbar
-        return (toolbar, self)
+        toolbarCompletion(toolbar)
+        return self
     }
-    
-    
 }

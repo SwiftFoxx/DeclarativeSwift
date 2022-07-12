@@ -18,7 +18,7 @@
 
 import UIKit
 
-extension UIStackView {
+public extension UIStackView {
     /// Initializes and returns a new stack view object that manages the provided views.
     /// - Parameters:
     ///   - axis: The axis along which the arranged views are laid out.

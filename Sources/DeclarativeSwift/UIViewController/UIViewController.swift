@@ -90,16 +90,14 @@ public extension UIViewController {
     }
     
     @discardableResult
-    func alert(title: String?, message: String? = nil, isPresented: Bindable<Bool>, actions: UIAlertAction...) -> UIViewController {
+    func alert(title: String?, message: String? = nil, isPresented: Bindable<Bool>, _ components: () -> [UIAlertAction]) -> UIViewController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        actions.forEach { action in
+        components().forEach { component in
             alertController
                 .addAction(
-                    action
+                    component
                 )
         }
-        
         isPresented.bind { [self] newValue in
             if newValue ?? false {
                 present(alertController, animated: true)
@@ -109,4 +107,7 @@ public extension UIViewController {
         }
         return self
     }
+    
+    // TODO: -
+    // ipad
 }
