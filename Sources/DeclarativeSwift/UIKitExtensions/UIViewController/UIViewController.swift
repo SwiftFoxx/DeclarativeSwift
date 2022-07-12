@@ -107,7 +107,4 @@ public extension UIViewController {
         }
         return self
     }
-    
-    // TODO: -
-    // ipad
 }
