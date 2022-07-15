@@ -18,15 +18,16 @@
 
 import UIKit
 
-/// - Tag: anyAction
-public final class AnyAction {
-    public let closure: () -> Void
-    
-    public init(_ closure: @escaping () -> Void) {
-        self.closure = closure
+public extension UIApplication {
+    static var applicationDisplayName: String? {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
     }
     
-    @objc public func invoke() {
-        closure()
+    static var projectBuildNumber: String? {
+        Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String
+    }
+    
+    static var projectVersion: String? {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
     }
 }

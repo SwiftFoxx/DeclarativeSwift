@@ -16,17 +16,41 @@
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import UIKit
+import CoreGraphics
 
-/// - Tag: anyAction
-public final class AnyAction {
-    public let closure: () -> Void
+extension CGFloat {
     
-    public init(_ closure: @escaping () -> Void) {
-        self.closure = closure
+    /// Converts `degrees` to `radians`
+    func radians() -> CGFloat {
+        self * .pi / 180
     }
     
-    @objc public func invoke() {
-        closure()
+    /// Converts `radians` to `degrees`
+    func degrees() -> CGFloat {
+        self * 180 / .pi
+    }
+    
+    var absoluteValue: CGFloat {
+        abs(self)
+    }
+    
+    var roundedCeil: CGFloat {
+        ceil(self)
+    }
+    
+    var roundedFloor: CGFloat {
+        floor(self)
+    }
+    
+    var intValue: Int {
+        Int(self)
+    }
+    
+    var floatValue: Float {
+        Float(self)
+    }
+    
+    var doubleValue: Double {
+        Double(self)
     }
 }

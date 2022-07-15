@@ -16,17 +16,40 @@
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import UIKit
+import CoreGraphics
 
-/// - Tag: anyAction
-public final class AnyAction {
-    public let closure: () -> Void
-    
-    public init(_ closure: @escaping () -> Void) {
-        self.closure = closure
+public extension CGPoint {
+    static func fromUniform(value: Int) -> CGPoint {
+        CGPoint(x: value, y: value)
     }
     
-    @objc public func invoke() {
-        closure()
+    static func fromUniform(value: CGFloat) -> CGPoint {
+        CGPoint(x: value, y: value)
+    }
+    
+    static func fromUniform(value: Double) -> CGPoint {
+        CGPoint(x: value, y: value)
+    }
+    
+    func distance(from p1: CGPoint, to p2: CGPoint) -> CGFloat {
+        let dX = p2.x - p1.x
+        let dY = p2.y - p1.y
+        return sqrt(pow(dX, 2) + pow(dY, 2))
+    }
+    
+    func distance(to point: CGPoint) -> CGFloat {
+        distance(from: self, to: point)
+    }
+    
+    func angle(between p1: CGPoint, and p2: CGPoint) -> CGFloat {
+        let dPoint = CGPoint(x: p2.x - p1.x, y: p2.y - p1.y)
+        let bearingRad = atan2(dPoint.y, dPoint.x)
+        var bearingDeg = bearingRad * (180 / .pi)
+        bearingDeg = bearingRad > 0 ? bearingRad : (bearingRad + 360)
+        return bearingDeg
+    }
+    
+    func angle(with point: CGPoint) -> CGFloat {
+        angle(between: self, and: point)
     }
 }

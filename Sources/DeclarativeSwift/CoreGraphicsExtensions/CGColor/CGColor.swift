@@ -18,15 +18,8 @@
 
 import UIKit
 
-extension CGFloat {
-    
-    /// Converts `degrees` to `radians`
-    func radians() -> CGFloat {
-        self * .pi / 180
-    }
-    
-    /// Converts `radians` to `degrees`
-    func degrees() -> CGFloat {
-        self * 180 / .pi
+public extension CGColor {
+    var uiColor: UIColor {
+        UIColor(cgColor: self)
     }
 }
