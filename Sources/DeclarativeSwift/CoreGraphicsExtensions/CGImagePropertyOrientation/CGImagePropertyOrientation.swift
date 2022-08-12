@@ -18,37 +18,19 @@
 
 import UIKit
 
-public extension Array {
-    func elementAt(index: Int) -> Element? {
-        guard index < count else { return nil }
-        return self[index]
-    }
-    
-    mutating func prepend(_ element: Element) {
-        insert(element, at: 0)
-    }
-    
-    init?(unsafeData: Data) {
-        guard unsafeData.count % MemoryLayout<Element>.stride == 0 else { return nil }
-        #if swift(>=5.0)
-        self = unsafeData.withUnsafeBytes { .init($0.bindMemory(to: Element.self)) }
-        #else
-        self = unsafeData.withUnsafeBytes {
-            .init(UnsafeBufferPointer<Element>(
-                start: $0,
-                count: unsafeData.count / MemoryLayout<Element>.stride
-            ))
+public extension CGImagePropertyOrientation {
+    init(_ uiOrientation: UIImage.Orientation) {
+        switch uiOrientation {
+            case .up: self = .up
+            case .upMirrored: self = .upMirrored
+            case .down: self = .down
+            case .downMirrored: self = .downMirrored
+            case .left: self = .left
+            case .leftMirrored: self = .leftMirrored
+            case .right: self = .right
+            case .rightMirrored: self = .rightMirrored
+            @unknown default:
+                fatalError()
         }
-        #endif
-    }
-}
-
-public extension Array where Element: UIView {
-    func viewWithTag(_ tag: Int) -> UIView? {
-        first(where: { $0.tag == tag })
-    }
-    
-    func firstResponder() -> UIView? {
-        first(where: { $0.isFirstResponder })
     }
 }

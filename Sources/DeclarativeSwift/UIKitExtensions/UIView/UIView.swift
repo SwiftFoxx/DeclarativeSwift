@@ -440,4 +440,12 @@ public extension UIView {
         }
         return nil
     }
+    
+    func imageConverted(isOpaque: Bool = false, scale: CGFloat = 0.0) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, isOpaque, 0.0)
+        drawHierarchy(in: bounds, afterScreenUpdates: true)
+        let snap = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return snap
+    }
 }

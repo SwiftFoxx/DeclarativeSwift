@@ -16,39 +16,29 @@
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import UIKit
+import Foundation
 
-public extension Array {
-    func elementAt(index: Int) -> Element? {
-        guard index < count else { return nil }
-        return self[index]
-    }
-    
-    mutating func prepend(_ element: Element) {
-        insert(element, at: 0)
-    }
-    
-    init?(unsafeData: Data) {
-        guard unsafeData.count % MemoryLayout<Element>.stride == 0 else { return nil }
-        #if swift(>=5.0)
-        self = unsafeData.withUnsafeBytes { .init($0.bindMemory(to: Element.self)) }
-        #else
-        self = unsafeData.withUnsafeBytes {
-            .init(UnsafeBufferPointer<Element>(
-                start: $0,
-                count: unsafeData.count / MemoryLayout<Element>.stride
-            ))
+public extension Data {
+    init<T>(value: T) {
+        self = withUnsafePointer(to: value) { (ptr: UnsafePointer<T>) -> Data in
+            return Data(buffer: UnsafeBufferPointer(start: ptr, count: 1))
         }
-        #endif
+    }
+    
+    mutating func append<T>(value: T) {
+        withUnsafePointer(to: value) { (ptr: UnsafePointer<T>) in
+            append(UnsafeBufferPointer(start: ptr, count: 1))
+        }
+    }
+    
+    init<T>(copyingBufferOf array: [T]) {
+        self = array.withUnsafeBufferPointer(Data.init)
+    }
+    
+    func toArray<T>(type: T.Type) -> [T] where T: ExpressibleByIntegerLiteral {
+        var array = [T](repeating: 0, count: self.count/MemoryLayout<T>.stride)
+        _ = array.withUnsafeMutableBytes { copyBytes(to: $0) }
+        return array
     }
 }
 
-public extension Array where Element: UIView {
-    func viewWithTag(_ tag: Int) -> UIView? {
-        first(where: { $0.tag == tag })
-    }
-    
-    func firstResponder() -> UIView? {
-        first(where: { $0.isFirstResponder })
-    }
-}

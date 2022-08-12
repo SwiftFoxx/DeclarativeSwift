@@ -18,7 +18,7 @@
 
 import CoreGraphics
 
-extension CGFloat {
+public extension CGFloat {
     
     /// Converts `degrees` to `radians`
     func radians() -> CGFloat {

@@ -71,5 +71,83 @@ public extension UIImage {
         self.init(cgImage: newCGImage)
     }
     
+    convenience init?(path: String, scale: CGFloat = 1) {
+        if path.isRemotePath {
+            var data: Data?
+            let semaphore = DispatchSemaphore(value: 1)
+            guard let url = URL(string: path) else { return nil }
+            DispatchQueue(
+                label: "declarativeswift.background",
+                qos: .background,
+                attributes: .concurrent
+            ).async {
+                data = try? Data(contentsOf: url)
+                DispatchQueue.main.async {
+                    semaphore.signal()
+                }
+            }
+            semaphore.wait()
+            if let data = data {
+                self.init(data: data, scale: scale)
+            } else {
+                return nil
+            }
+        } else {
+            let url = URL(fileURLWithPath: path)
+            guard let data = try? Data(contentsOf: url) else { return nil }
+            self.init(data: data, scale: scale)
+        }
+    }
     
+    func cropped(to rect: CGRect) -> UIImage? {
+        guard rect.size.width <= size.width, rect.size.height <= size.height else { return nil }
+        let scaledRect = rect.applying(CGAffineTransform(scaleX: scale, y: scale))
+        guard let image = cgImage?.cropping(to: scaledRect) else { return nil }
+        return UIImage(cgImage: image, scale: scale, orientation: imageOrientation)
+    }
+    
+    func compressed(quality: CGFloat) -> UIImage? {
+        guard let data = jpegData(compressionQuality: quality) else { return nil }
+        return UIImage(data: data)
+    }
+    
+    func compressed(quality: CGFloat) -> Data? {
+        jpegData(compressionQuality: quality)
+    }
+    
+    func tinted(with color: UIColor, blendMode: CGBlendMode, opacity: CGFloat) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        defer {
+            UIGraphicsEndImageContext()
+        }
+        let rect = CGRect(origin: .zero, size: size)
+        let context = UIGraphicsGetCurrentContext()
+        color.setFill()
+        context?.fill(rect)
+        draw(in: rect, blendMode: blendMode, alpha: opacity)
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+}
+
+public extension UIImage.Orientation {
+    init(_ rawValue: CGImagePropertyOrientation) {
+        switch rawValue {
+            case .up:
+                self = .up
+            case .upMirrored:
+                self = .upMirrored
+            case .down:
+                self = .down
+            case .downMirrored:
+                self = .downMirrored
+            case .leftMirrored:
+                self = .leftMirrored
+            case .right:
+                self = .right
+            case .rightMirrored:
+                self = .rightMirrored
+            case .left:
+                self = .left
+        }
+    }
 }

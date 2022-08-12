@@ -67,7 +67,19 @@ public extension String {
         ) ?? []
     }
     
+    var isRemotePath: Bool {
+        hasPrefix("http") || hasPrefix("www")
+    }
     
+    var remoteScheme: String? {
+        if hasPrefix("https") {
+            return "https"
+        } else if hasPrefix("http") {
+            return "http"
+        } else {
+            return nil
+        }
+    }
 }
 
 @propertyWrapper
