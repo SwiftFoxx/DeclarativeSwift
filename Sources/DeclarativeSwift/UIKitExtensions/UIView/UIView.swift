@@ -429,6 +429,30 @@ public extension UIView {
         return removing(subViews: reductionViews)
     }
     
+    @discardableResult
+    func addToView(_ parent: UIView?) -> UIView {
+        parent?.addSubview(self)
+        return self
+    }
+    
+    @discardableResult
+    func insertInView(_ parent: UIView?, at index: Int) -> UIView {
+        parent?.insertSubview(self, at: index)
+        return self
+    }
+    
+    @discardableResult
+    func insertInView(_ parent: UIView?, above subView: UIView) -> UIView {
+        parent?.insertSubview(self, aboveSubview: subView)
+        return self
+    }
+    
+    @discardableResult
+    func insertInView(_ parent: UIView?, below subView: UIView) -> UIView {
+        parent?.insertSubview(self, belowSubview: subView)
+        return self
+    }
+    
     /// The view controller that has the view embedded.
     var viewController: UIViewController? {
         weak var superResponder: UIResponder? = self
