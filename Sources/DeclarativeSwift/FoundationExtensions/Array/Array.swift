@@ -44,7 +44,7 @@ public extension Array {
 }
 
 public extension Array where Element: Comparable, Element: Hashable {
-    func removeingDuplicate(_ ascending: Bool = true) -> Array {
+    func removeingDuplicate(ascending: Bool = true) -> Array {
         let aSet = Set(self)
         var result = Array(aSet)
         if ascending {
