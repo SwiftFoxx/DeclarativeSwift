@@ -43,6 +43,31 @@ public extension Array {
     }
 }
 
+public extension Array where Element: Comparable, Element: Hashable {
+    func removeingDuplicate(_ ascending: Bool = true) -> Array {
+        let aSet = Set(self)
+        var result = Array(aSet)
+        if ascending {
+            result = result.sorted(by: <)
+        } else {
+            result = result.sorted(by: >)
+        }
+        return result
+    }
+    
+    @available(iOS 15.0, *)
+    func removeingDuplicate(_ order: SortOrder = .forward) -> Array {
+        let aSet = Set(self)
+        var result = Array(aSet)
+        if order == .forward {
+            result = result.sorted(by: { $0 < $1 })
+        } else {
+            result = result.sorted(by: { $0 > $1 })
+        }
+        return result
+    }
+}
+
 public extension Array where Element: UIView {
     func viewWithTag(_ tag: Int) -> UIView? {
         first(where: { $0.tag == tag })
